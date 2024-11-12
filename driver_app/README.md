@@ -1,6 +1,6 @@
 # driver_app
 
-A driver app for yurban rides.
+A new Flutter project.
 
 ## Getting Started
 
