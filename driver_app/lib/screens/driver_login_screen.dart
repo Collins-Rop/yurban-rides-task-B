@@ -19,7 +19,7 @@ class DriverLoginScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Handle login logic
+                _login(context);
               },
               child: Text('Login'),
             ),
@@ -27,18 +27,14 @@ class DriverLoginScreen extends StatelessWidget {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   try {
-                    // Call the API to log in the driver
                     final response = await _apiService.loginDriver(phoneNumber, pin);
                     if (response.success) {
-                      // Save driver details and navigate to home screen
                       Provider.of<AuthProvider>(context, listen: false).setDriver(response.driver);
                       Navigator.pushReplacementNamed(context, '/driver_home');
                     } else {
-                      // Show error message
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message)));
                     }
                   } catch (e) {
-                    // Handle error
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login failed. Please try again.')));
                   }
                 }

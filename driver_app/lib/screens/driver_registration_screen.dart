@@ -15,14 +15,14 @@ class _DriverRegistrationScreenState extends State<DriverRegistrationScreen> {
   String lastName = '';
   String phoneNumber = '';
   String pin = '';
-  String gender = 'Male'; // Default value
+  String gender = '';
   String email = '';
   String county = '';
   String subCounty = '';
 
-  // Add dropdown options for counties and sub-counties
-  List<String> counties = ['County1', 'County2']; // Replace with API data
-  List<String> subCounties = ['SubCounty1', 'SubCounty2']; // Replace with API data
+
+  List<String> counties = ['County1', 'County2'];
+  List<String> subCounties = ['SubCounty1', 'SubCounty2'];
 
   @override
   Widget build(BuildContext context) {
@@ -100,9 +100,9 @@ class _DriverRegistrationScreenState extends State<DriverRegistrationScreen> {
                     );
                     try {
                       await _apiService.registerDriver(driver);
-                      // Navigate to login or home screen
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Registration successful. Please login.')));
                     } catch (e) {
-                      // Handle error
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Registration failed. Please try again.')));
                     }
                   }
                 },

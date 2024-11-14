@@ -27,5 +27,4 @@ class ApiService {
     }
   }
 
-// Similar methods for customer registration, login, fetching counties and sub-counties, etc.
 }

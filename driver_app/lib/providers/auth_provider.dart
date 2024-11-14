@@ -19,5 +19,4 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// Methods for login, logout, etc.
 }

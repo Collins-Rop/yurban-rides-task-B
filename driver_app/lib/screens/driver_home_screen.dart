@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
+import '../services/api_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class DriverHomeScreen extends StatelessWidget {
+  final ApiService _apiService = ApiService();
+
+  Future<void> _goOnline(BuildContext context) async {
+    try {
+      await _apiService.updateDriverStatus(true);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('You are now online')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to go online. Please try again.')));
+    }
+  }
+
+  Future<void> _goOffline(BuildContext context) async {
+    try {
+      await _apiService.updateDriverStatus(false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('You are now offline')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to go offline. Please try again.')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,19 +35,19 @@ class DriverHomeScreen extends StatelessWidget {
             ListTile(
               title: Text('Profile'),
               onTap: () {
-                // Navigate to profile screen
+                Navigator.pushNamed(context, '/driver_profile');
               },
             ),
             ListTile(
               title: Text('My Rides'),
               onTap: () {
-                // Navigate to My Rides screen
+                Navigator.pushNamed(context, '/driver_rides');
               },
             ),
             ListTile(
               title: Text('Logout'),
               onTap: () {
-                // Handle logout
+                Provider.of<AuthProvider>(context, listen: false).logout();
               },
             ),
           ],
@@ -34,17 +57,16 @@ class DriverHomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Sample map widget
             Container(height: 200, color: Colors.blue),
             ElevatedButton(
               onPressed: () {
-                // Go Online logic
+                _goOnline(context);
               },
               child: Text('Go Online'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Go Offline logic
+                _goOffline(context);
               },
               child: Text('Go Offline'),
             ),
